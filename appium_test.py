@@ -29,7 +29,36 @@ class AppTest(unittest.TestCase):
 	
     passIntro(self.actions)  
 
+
+  def test_Category(self):
+    #Create Category Test
+    test_text = 'aaa'
+	
+    AppTest.create_note(self, 'ccc', '123')
+
+    #self.actions.press(x=400,y=200).release().perform()
+    notes = AppTest.getNotesInNoteList(self)
+    notes[0].click()
+   
+    time.sleep(1)
+    #self.wd.find_element_by_id('it.feio.android.omninotes:id/menu_category').click
+    self.actions.press(x=500,y=100).release().perform() #click category menu
+    time.sleep(1)	
+    self.wd.find_element_by_id('it.feio.android.omninotes:id/buttonDefaultPositive').click()
+    time.sleep(1)
+    self.wd.find_element_by_id('it.feio.android.omninotes:id/category_title').set_value(test_text)
+    self.wd.find_element_by_id('it.feio.android.omninotes:id/save').click()
+    self.actions.press(x=40,y=90).release().perform() #click back
+	
+    #
+
+  def getNotesInNoteList(self): #App must show note list
+    note_list = self.wd.find_element_by_id('it.feio.android.omninotes:id/list')
+    notes = note_list.find_elements_by_id('it.feio.android.omninotes:id/root')
+    return notes
+
   def create_note(self, title, content):
+    time.sleep(1)
     self.wd.find_element_by_id('it.feio.android.omninotes:id/fab_expand_menu_button').click()  
     time.sleep(1)
 	#click Article Comment 
@@ -39,23 +68,9 @@ class AppTest(unittest.TestCase):
     self.wd.find_element_by_id('it.feio.android.omninotes:id/detail_content').set_value(content)
     time.sleep(1)
     #click back
-    self.actions.press(x=40,y=90).release().perform()   
+    self.actions.press(x=40,y=90).release().perform() #click back
     time.sleep(2)
 	
-  def test_createCategory_1(self):
-    test_text = 'aaa'
-	
-    AppTest.create_note(self, 'ccc', '123')
-
-    self.actions.press(x=400,y=200).release().perform()
-    time.sleep(2)
-    #self.wd.find_element_by_id('it.feio.android.omninotes:id/menu_category').click
-    self.actions.press(x=500,y=100).release().perform()
-    time.sleep(2)	
-    self.wd.find_element_by_id('it.feio.android.omninotes:id/buttonDefaultPositive').click
-    time.sleep(2)
-    self.wd.find_element_by_id('it.feio.android.omninotes:id/category_title').set_value(test_text)
-    self.wd.find_element_by_id('it.feio.android.omninotes:id/save').click
 
 if __name__ == "__main__":
   unittest.main()
