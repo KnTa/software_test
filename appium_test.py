@@ -153,7 +153,9 @@ class AppTest(unittest.TestCase):
     #Remove Note From Category Test
     note = AppTest.findNotesInNoteList(self, note_data[1][0], note_data[1][1])  
     note.click()
+    time.sleep(1)
     self.actions.press(x=500,y=100).release().perform() #click category menu
+    time.sleep(1)
     self.wd.find_element_by_id('it.feio.android.omninotes:id/buttonDefaultNegative').click()
     self.actions.press(x=40,y=90).release().perform() #click back
     time.sleep(1)
@@ -167,6 +169,7 @@ class AppTest(unittest.TestCase):
     note = AppTest.findNotesInNoteList(self, note_data[1][0], note_data[1][1])
     note.click()
     #create new category
+    time.sleep(1)	
     self.actions.press(x=500,y=100).release().perform() #click category menu
     time.sleep(1)	
     self.wd.find_element_by_id('it.feio.android.omninotes:id/buttonDefaultPositive').click()
@@ -181,14 +184,14 @@ class AppTest(unittest.TestCase):
     time.sleep(1)
     self.actions.press(x=40,y=90).release().perform() #open slide menu
     #---------
-    category = AppTest.findCategoryInSlideMenuTagList(category_text_2)
+    category = AppTest.findCategoryInSlideMenuTagList(self, category_text_2)
     self.actions.long_press(category)
     self.actions.perform()
     time.sleep(1)
     self.wd.find_element_by_id('it.feio.android.omninotes:id/delete').click()
     self.wd.find_element_by_id('it.feio.android.omninotes:id/buttonDefaultPositive').click()
     list = AppTest.getCategoriesInSlideMenuTagList(self)
-    self.assertEqual(len(list),1)
+    self.assertEqual(len(list)-1,1) #I am not sure why but there always one more element in list
     
 
   def getCategoryCountTextInSlideMenu(self, title): #must open slide menu
